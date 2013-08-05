@@ -1,5 +1,6 @@
 #ifndef SNAKE
 #define SNAKE
+#include <stdbool.h>
 
 typedef struct point_s {
 	int x;
@@ -17,6 +18,7 @@ typedef struct snake_s {
 	point *direction;
 } snake;
 
+bool point_compare(point *p1, point *p2);
 void snake_init(snake *s);
 void snake_destroy(snake *s);
 void snake_append_body(snake *s, point p);

@@ -3,9 +3,9 @@ all:
 	./main
 
 test:
-	gcc snake.c snake_test.c -o snake_test -std=gnu99 -I.
+	gcc snake.c snake_test.c -o snake_test -std=gnu99 -g
 	./snake_test
 
 memcheck:
 	gcc snake.c snake_test.c -o snake_test -std=gnu99 -g
-	valgrind ./snake_test
+	valgrind -q ./snake_test

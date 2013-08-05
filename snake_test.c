@@ -18,7 +18,7 @@ void test_snake() {
 	point p1 = {1, 2};
 	snake_append_body(s, p1);
 	assert(s->size == 1);
-	assert(s->head->p == p1);
+	assert(point_compare(&(s->head->p), &p1));
 
 	snake_destroy(s);
 	assert(s->head == NULL);
