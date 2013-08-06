@@ -8,6 +8,25 @@ void test_point() {
 	assert(a.y == 2);
 }
 
+void test_snake_append_body() {
+	snake s[1];
+	snake_init(s);
+	point p1 = {1, 2};
+	snake_append_body(s, p1);
+	assert(s->size == 1);
+	assert(point_compare(&(s->head->p), &p1));
+
+	point p2 = {3, 4};
+	snake_append_body(s, p2);
+	assert(s->head->p.x == 3);	// (3, 4) -> (1, 2)
+	assert(s->head->p.y == 4);
+	linked_node *next = s->head->next;
+	assert(next->p.x == 1);
+	assert(next->p.y == 2);
+
+	snake_print(s);
+}
+
 void test_snake() {
 	snake s[1];
 	snake_init(s);
@@ -15,10 +34,7 @@ void test_snake() {
 	assert(s->size == 0);
 	assert(s->direction == NULL);
 
-	point p1 = {1, 2};
-	snake_append_body(s, p1);
-	assert(s->size == 1);
-	assert(point_compare(&(s->head->p), &p1));
+	test_snake_append_body();
 
 	snake_destroy(s);
 	assert(s->head == NULL);

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "snake.h"
 
 bool point_compare(point *p1, point *p2) {
@@ -29,7 +30,6 @@ void snake_destroy(snake *s) {
 
 void snake_append_body(snake *s, point p) {
 	linked_node *head = s->head;
-	linked_node *prev = head;
 	linked_node *new_node = malloc(sizeof(linked_node));
 	new_node->p = p;
 	new_node->next = NULL;
@@ -37,11 +37,22 @@ void snake_append_body(snake *s, point p) {
 	if (s->head == NULL) {
 		s->head = new_node;
 	} else {
-		while(head != NULL) {
-			prev = head;
-			head = head->next;
-		}
-		prev->next = new_node;
+		new_node->next = head;
+		s->head = new_node;
 	}
 	s->size++;
+}
+
+void snake_print(snake *s) {
+	printf("snake size: %d\n", s->size);
+	printf("snake head direction:\n");
+	if (s->direction) {
+		printf("(%d, %d)\n", s->direction->x, s->direction->y);
+	}
+	printf("snake body:");
+	for (linked_node *head = s->head; head; head = head->next) {
+		if (head) {
+			printf("(%d, %d)\n", head->p.x, head->p.y);
+		}
+	}
 }
