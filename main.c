@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "/usr/include/ncursesw/ncurses.h"
 
 int maxy, maxx;
@@ -24,10 +25,23 @@ void get_maxyx() {
 	mvprintw(0, 0, "maxx:%d, maxy:%d\n", maxx, maxy);
 }
 
+void get_random_x_y(int *x, int *y) {
+	*x = random() % maxx;
+	*y = random() % maxy;
+}
+
+void draw_on_screen() {
+}
+
+void change_snake_state() {
+}
+
 void input_loop() {
 	int key = 0;
 	int row = 0;
 	int col = 0;
+	int trow;
+	int tcol;
 	while ((char)key != 'q'){
 		key = getch();
 		switch(key) {
@@ -48,6 +62,8 @@ void input_loop() {
 		}
 		wclear(stdscr);
 		mvprintw(row, col, "#");
+		get_random_x_y(&trow, &tcol);
+		mvprintw(trow, tcol, "*");
 		refresh();
 	}
 }
