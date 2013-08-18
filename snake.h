@@ -22,5 +22,6 @@ bool point_compare(point *p1, point *p2);
 void snake_init(snake *s);
 void snake_destroy(snake *s);
 void snake_append_body(snake *s, point p);
+void snake_remove_body(snake *s);
 
 #endif

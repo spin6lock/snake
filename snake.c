@@ -43,6 +43,23 @@ void snake_append_body(snake *s, point p) {
 	s->size++;
 }
 
+void snake_remove_body(snake *s) {
+	linked_node *head = s->head;
+	linked_node *prev = head;
+	if (s->head == NULL) return;
+	while(head->next) {
+		prev = head;
+		head = head->next;
+	}
+	if (head == s->head) {
+		s->head = NULL;
+	} else {
+		prev->next = NULL;
+	}
+	free(head);
+	s->size--;
+}
+
 void snake_print(snake *s) {
 	printf("snake size: %d\n", s->size);
 	printf("snake head direction:\n");

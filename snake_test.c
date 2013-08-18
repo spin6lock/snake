@@ -24,7 +24,28 @@ void test_snake_append_body() {
 	assert(next->p.x == 1);
 	assert(next->p.y == 2);
 
+	printf("test append body:\n");
 	snake_print(s);
+	printf("\n");
+}
+
+void test_snake_remove_body() {
+	snake s[1];
+	snake_init(s);
+	point p1 = {3, 4};
+	point p2 = {1, 2};
+	snake_append_body(s, p1);
+	snake_append_body(s, p2);
+
+	snake_remove_body(s);
+	assert(s->head->p.x == 3);
+	assert(s->head->p.y == 4);
+	assert(s->size == 1);
+	assert(s->head->next == NULL);
+
+	printf("test remove body:\n");
+	snake_print(s);
+	printf("\n");
 }
 
 void test_snake() {
@@ -35,6 +56,7 @@ void test_snake() {
 	assert(s->direction == NULL);
 
 	test_snake_append_body();
+	test_snake_remove_body();
 
 	snake_destroy(s);
 	assert(s->head == NULL);
