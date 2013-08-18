@@ -7,8 +7,14 @@ void decrease(int *num) {
 	}
 }
 
-void increase(int *num) {
+void increase_col(int *num) {
 	if (*num < maxy - 1) {
+		(*num)++;
+	}
+}
+
+void increase_row(int *num) {
+	if (*num < maxx - 1) {
 		(*num)++;
 	}
 }
@@ -18,14 +24,7 @@ void get_maxyx() {
 	mvprintw(0, 0, "maxx:%d, maxy:%d\n", maxx, maxy);
 }
 
-int main(void)
-{
-	WINDOW* win;
-	initscr();
-	curs_set(FALSE);
-	noecho();
-	get_maxyx();
-	
+void input_loop() {
 	int key = 0;
 	int row = 0;
 	int col = 0;
@@ -36,13 +35,13 @@ int main(void)
 			decrease(&col);
 			break;
 		case 'j':
-			increase(&row);
+			increase_row(&row);
 			break;
 		case 'k':
 			decrease(&row);
 			break;
 		case 'l':
-			increase(&col);
+			increase_col(&col);
 			break;
 		default:
 			continue;
@@ -51,6 +50,17 @@ int main(void)
 		mvprintw(row, col, "#");
 		refresh();
 	}
+}
+
+int main(void)
+{
+	initscr();
+	curs_set(FALSE);
+	noecho();
+	get_maxyx();
+	
+	input_loop();
+
 	endwin();
 	return 0;
 }
