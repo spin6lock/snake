@@ -1,11 +1,11 @@
 all:
-	gcc main.c -o main -lncursesw -std=gnu99
+	clang snake.c main.c -o main -lncursesw -std=gnu99 -g
 	./main
 
 test:
-	gcc snake.c snake_test.c -o snake_test -std=gnu99 -g
+	clang snake.c snake_test.c -o snake_test -std=gnu99 -g
 	./snake_test
 
 memcheck:
-	gcc snake.c snake_test.c -o snake_test -std=gnu99 -g
+	clang snake.c snake_test.c -o snake_test -std=gnu99 -g
 	valgrind -q ./snake_test

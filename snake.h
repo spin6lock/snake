@@ -23,5 +23,6 @@ void snake_init(snake *s);
 void snake_destroy(snake *s);
 void snake_append_body(snake *s, point p);
 void snake_remove_body(snake *s);
+void snake_print(snake *s);
 
 #endif
