@@ -83,6 +83,13 @@ void input_loop() {
 		case 'l':
 			direction = (point){0, 1};
 			break;
+		case ERR:
+			if (s->direction) {
+				direction = *(s->direction);
+			} else {
+				direction = (point){0, 0};
+			}
+			break;
 		default:
 			continue;
 		}
@@ -99,6 +106,7 @@ int main(void)
 	initscr();
 	curs_set(FALSE);
 	noecho();
+	halfdelay(1);
 	get_maxyx();
 	
 	input_loop();
