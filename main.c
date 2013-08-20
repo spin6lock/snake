@@ -42,6 +42,7 @@ void change_snake_state(snake *s, point direction) {
 	if ((s->direction->x + direction.x) == 0
 		&& (s->direction->y + direction.y) == 0) {
 		fprintf(stderr, "forbidden move");
+		return;
 	}
 	s->direction->x = direction.x;
 	s->direction->y = direction.y;
