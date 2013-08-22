@@ -14,6 +14,15 @@ void get_maxyx() {
 	mvprintw(0, 0, "maxx:%d, maxy:%d\n", maxx, maxy);
 }
 
+bool is_collision(snake *s, point p) {
+	for(linked_node *head = s->head;head != NULL;head=head->next) {
+		if (head != NULL) {
+			if (point_compare(&(head->p), &p)) return true;
+		}
+	}
+	return false;
+}
+
 point *get_new_xy_by_direction(point p, point direction) {
 	if (0 > p.x + direction.x || p.x + direction.x >= maxx) {
 		return NULL;
@@ -32,10 +41,7 @@ void get_random_xy(int *x, int *y) {
 	*y = random() % maxy;
 }
 
-void draw_on_screen() {
-}
-
-void change_snake_state(snake *s, point direction) {
+void change_snake_state(snake *s, point direction, point random_point) {
 	if (s->direction == NULL) {
 		s->direction = malloc(sizeof(point));
 	}
@@ -49,7 +55,7 @@ void change_snake_state(snake *s, point direction) {
 	point *newp = get_new_xy_by_direction(s->head->p, direction);
 	if (!newp) return;
 	snake_append_body(s, *newp);
-	if (s->size > 20) {
+	if (!is_collision(s, random_point)) {
 		snake_remove_body(s);
 	}
 }
@@ -60,14 +66,25 @@ void draw_snake(snake *s) {
 	}
 }
 
+void draw_point(point t) {
+	mvprintw(t.x, t.y, "#");
+}
+
+void draw_on_screen(snake *s, point p) {
+	draw_snake(s);
+	draw_point(p);
+}
+
 void input_loop() {
 	int key = 0;
 	int row = 0;
 	int col = 0;
 	point direction;
+	point random_point;
 	snake s[1];
 	snake_init(s);
 	snake_append_body(s, (point){0, 0});
+	get_random_xy(&(random_point.x), &(random_point.y));
 	while ((char)key != 'q'){
 		key = getch();
 		switch(key) {
@@ -93,9 +110,12 @@ void input_loop() {
 		default:
 			continue;
 		}
-		change_snake_state(s, direction);
+		change_snake_state(s, direction, random_point);
+		if (is_collision(s, random_point)) {
+			get_random_xy(&(random_point.x), &(random_point.y));
+		}
 		wclear(stdscr);
-		draw_snake(s);
+		draw_on_screen(s, random_point);
 		refresh();
 	}
 	snake_destroy(s);
